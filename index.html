@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CoinGrow | Crece con Crypto</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:linear-gradient(135deg,#0b0215,#18032c,#220640);
+color:white;
+overflow-x:hidden;
+}
+
+/* PARTICLES BACKGROUND */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* HEADER */
+
+header{
+text-align:center;
+padding:80px 20px;
+}
+
+header h1{
+font-size:65px;
+background:linear-gradient(90deg,#00ffd5,#bb6cff);
+-webkit-background-clip:text;
+color:transparent;
+animation:glow 3s infinite alternate;
+}
+
+@keyframes glow{
+from{filter:drop-shadow(0 0 10px #bb6cff);}
+to{filter:drop-shadow(0 0 35px #00ffd5);}
+}
+
+header p{
+font-size:22px;
+margin-top:15px;
+opacity:0.9;
+}
+
+/* PHONE MOCKUP */
+
+.phone{
+width:230px;
+height:420px;
+margin:40px auto;
+border-radius:30px;
+background:#000;
+border:4px solid #00ffd5;
+box-shadow:0 0 40px #00ffd5;
+display:flex;
+align-items:center;
+justify-content:center;
+animation:float 5s infinite ease-in-out;
+}
+
+.phone span{
+color:#00ffd5;
+font-weight:bold;
+}
+
+/* FLOAT */
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-15px)}
+100%{transform:translateY(0)}
+}
+
+/* SECTIONS */
+
+section{
+padding:70px 20px;
+max-width:1100px;
+margin:auto;
+}
+
+/* CARDS */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.card{
+background:#1b0630;
+padding:25px;
+border-radius:15px;
+text-align:center;
+box-shadow:0 0 20px rgba(187,108,255,0.4);
+transition:0.4s;
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.03);
+box-shadow:0 0 45px rgba(0,255,213,0.8);
+}
+
+.card h3{
+margin-bottom:10px;
+color:#00ffd5;
+}
+
+/* COUNTERS */
+
+.counter{
+font-size:45px;
+color:#00ffd5;
+font-weight:bold;
+}
+
+/* LIVE EARNINGS */
+
+.earnings{
+text-align:center;
+font-size:35px;
+margin-top:40px;
+color:#00ffd5;
+}
+
+/* BUTTON */
+
+.btn{
+display:block;
+margin:60px auto;
+padding:22px 45px;
+font-size:22px;
+background:linear-gradient(90deg,#00ffd5,#bb6cff);
+border:none;
+border-radius:40px;
+cursor:pointer;
+color:black;
+font-weight:bold;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.12);
+box-shadow:0 0 35px #00ffd5;
+}
+
+/* FLOATING NOTIFICATIONS */
+
+#notifyContainer{
+position:fixed;
+bottom:20px;
+left:20px;
+z-index:9999;
+}
+
+.notify{
+background:rgba(0,0,0,0.75);
+border-left:4px solid #00ffd5;
+padding:12px 20px;
+margin-top:10px;
+border-radius:10px;
+backdrop-filter:blur(10px);
+animation:slideIn 0.5s;
+}
+
+@keyframes slideIn{
+from{
+transform:translateX(-40px);
+opacity:0;
+}
+to{
+transform:translateX(0);
+opacity:1;
+}
+}
+
+/* MAP */
+
+.map{
+text-align:center;
+font-size:120px;
+opacity:0.25;
+animation:float 8s infinite;
+}
+
+/* FLOATING ICONS */
+
+.icon{
+font-size:40px;
+animation:float 4s infinite ease-in-out;
+}
+
+footer{
+text-align:center;
+padding:40px;
+opacity:0.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<header>
+
+<h1>🚀 COINGROW</h1>
+
+<p>Crece, invierte y genera recompensas en USDT</p>
+
+<div class="phone">
+<span>📱 Plataforma CoinGrow</span>
+</div>
+
+</header>
+
+
+<section>
+
+<h2 style="text-align:center;font-size:35px;">🌍 Nuestra Comunidad</h2>
+
+<div class="cards">
+
+<div class="card">
+<div class="icon">👤</div>
+<div class="counter" data-target="1382">0</div>
+<p>Usuarios registrados</p>
+</div>
+
+<div class="card">
+<div class="icon">🤝</div>
+<div class="counter" data-target="600">0</div>
+<p>Usuarios por referidos</p>
+</div>
+
+<div class="card">
+<div class="icon">💰</div>
+<div class="counter" data-target="348">0</div>
+<p>Usuarios que han invertido</p>
+</div>
+
+</div>
+
+<div class="earnings">
+💰 Ganancias generadas en la plataforma:  
+<br>
+<span id="earn">$12,450</span>
+</div>
+
+</section>
+
+
+<section>
+
+<h2 style="text-align:center;font-size:35px;">🎁 Beneficios para usuarios</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>🎁 Bono de registro</h3>
+<p>Recibe <b>1 USDT</b> automáticamente al crear tu cuenta.</p>
+</div>
+
+<div class="card">
+<h3>💰 Bono por depósito</h3>
+<p>Deposita <b>5 USDT o más</b> y recibe <b>+15 USDT</b>.</p>
+</div>
+
+<div class="card">
+<h3>📈 Inversiones</h3>
+<p>Potenciadores con ganancias estimadas de <b>30%</b>.</p>
+</div>
+
+<div class="card">
+<h3>👥 Referidos</h3>
+<p>Gana <b>0.10 USDT</b> por cada invitado.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section>
+
+<h2 style="text-align:center;font-size:35px;">👑 Programa de Colaboradores</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>💎 Referidos ampliados</h3>
+<p>Recibe <b>0.30 USDT</b> por invitado.</p>
+</div>
+
+<div class="card">
+<h3>💰 Beneficios diarios</h3>
+<p>Colaboradores generan desde <b>10 USDT diarios</b>.</p>
+</div>
+
+<div class="card">
+<h3>🚀 Crecimiento</h3>
+<p>Participa en la expansión global.</p>
+</div>
+
+</div>
+
+</section>
+
+<div class="map">
+🌎
+</div>
+
+<button class="btn"
+onclick="window.location.href='https://usdtexchange1.github.io/COIN-GROW/'">
+🚀 ACCESO A LA PLATAFORMA
+</button>
+
+<footer>
+CoinGrow © Plataforma en crecimiento
+</footer>
+
+<div id="notifyContainer"></div>
+
+<script>
+
+/* PARTICLES */
+
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+for(let i=0;i<80;i++){
+
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2,
+d:Math.random()*1
+});
+
+}
+
+function drawParticles(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ffd5";
+
+particles.forEach(p=>{
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+
+p.y+=p.d;
+
+if(p.y>canvas.height){
+p.y=0;
+}
+
+});
+
+requestAnimationFrame(drawParticles);
+
+}
+
+drawParticles();
+
+/* COUNTERS */
+
+document.querySelectorAll(".counter").forEach(counter=>{
+
+let update=()=>{
+
+let target=+counter.getAttribute("data-target");
+let current=+counter.innerText;
+let increment=target/100;
+
+if(current<target){
+counter.innerText=Math.ceil(current+increment);
+setTimeout(update,20);
+}else{
+counter.innerText=target;
+}
+
+}
+
+update();
+
+});
+
+/* LIVE EARNINGS */
+
+let earn=12450;
+
+setInterval(()=>{
+
+earn+=Math.floor(Math.random()*5);
+
+document.getElementById("earn").innerText="$"+earn.toLocaleString();
+
+},3000);
+
+/* FLOATING NOTIFICATIONS */
+
+function randomName(){
+
+const names=["Carlos","Ana","Luis","Daniel","Jorge","Miguel","Sofía","Laura","Pedro","Marcos","Elena","Mario"];
+
+return names[Math.floor(Math.random()*names.length)];
+
+}
+
+function showNotification(){
+
+let div=document.createElement("div");
+div.className="notify";
+
+div.innerText="✅ "+randomName()+" se ha registrado en CoinGrow";
+
+document.getElementById("notifyContainer").appendChild(div);
+
+setTimeout(()=>{div.remove();},3000);
+
+}
+
+function startNotifications(){
+
+let time=(Math.random()*29000)+1000;
+
+setTimeout(()=>{
+
+showNotification();
+startNotifications();
+
+},time);
+
+}
+
+startNotifications();
+
+</script>
+
+</body>
+</html>
