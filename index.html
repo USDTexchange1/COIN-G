@@ -21,8 +21,6 @@ color:white;
 overflow-x:hidden;
 }
 
-/* PARTICLES BACKGROUND */
-
 canvas{
 position:fixed;
 top:0;
@@ -56,7 +54,7 @@ margin-top:15px;
 opacity:0.9;
 }
 
-/* PHONE MOCKUP */
+/* PHONE */
 
 .phone{
 width:230px;
@@ -76,8 +74,6 @@ animation:float 5s infinite ease-in-out;
 color:#00ffd5;
 font-weight:bold;
 }
-
-/* FLOAT */
 
 @keyframes float{
 0%{transform:translateY(0)}
@@ -121,15 +117,11 @@ margin-bottom:10px;
 color:#00ffd5;
 }
 
-/* COUNTERS */
-
 .counter{
 font-size:45px;
 color:#00ffd5;
 font-weight:bold;
 }
-
-/* LIVE EARNINGS */
 
 .earnings{
 text-align:center;
@@ -137,8 +129,6 @@ font-size:35px;
 margin-top:40px;
 color:#00ffd5;
 }
-
-/* BUTTON */
 
 .btn{
 display:block;
@@ -158,8 +148,6 @@ transition:0.3s;
 transform:scale(1.12);
 box-shadow:0 0 35px #00ffd5;
 }
-
-/* FLOATING NOTIFICATIONS */
 
 #notifyContainer{
 position:fixed;
@@ -189,16 +177,12 @@ opacity:1;
 }
 }
 
-/* MAP */
-
 .map{
 text-align:center;
 font-size:120px;
 opacity:0.25;
 animation:float 8s infinite;
 }
-
-/* FLOATING ICONS */
 
 .icon{
 font-size:40px;
@@ -221,7 +205,6 @@ opacity:0.7;
 <header>
 
 <h1>🚀 COINGROW</h1>
-
 <p>Crece, invierte y genera recompensas en USDT</p>
 
 <div class="phone">
@@ -229,7 +212,6 @@ opacity:0.7;
 </div>
 
 </header>
-
 
 <section>
 
@@ -239,32 +221,31 @@ opacity:0.7;
 
 <div class="card">
 <div class="icon">👤</div>
-<div class="counter" data-target="1382">0</div>
+<div id="users" class="counter">0</div>
 <p>Usuarios registrados</p>
 </div>
 
 <div class="card">
 <div class="icon">🤝</div>
-<div class="counter" data-target="600">0</div>
+<div id="refs" class="counter">0</div>
 <p>Usuarios por referidos</p>
 </div>
 
 <div class="card">
 <div class="icon">💰</div>
-<div class="counter" data-target="348">0</div>
+<div id="investors" class="counter">0</div>
 <p>Usuarios que han invertido</p>
 </div>
 
 </div>
 
 <div class="earnings">
-💰 Ganancias generadas en la plataforma:  
+💰 Ganancias generadas en la plataforma  
 <br>
-<span id="earn">$12,450</span>
+<span id="earn">$0</span>
 </div>
 
 </section>
-
 
 <section>
 
@@ -274,28 +255,27 @@ opacity:0.7;
 
 <div class="card">
 <h3>🎁 Bono de registro</h3>
-<p>Recibe <b>1 USDT</b> automáticamente al crear tu cuenta.</p>
+<p>Recibe <b>1 USDT</b> automáticamente.</p>
 </div>
 
 <div class="card">
 <h3>💰 Bono por depósito</h3>
-<p>Deposita <b>5 USDT o más</b> y recibe <b>+15 USDT</b>.</p>
+<p>Deposita <b>5 USDT</b> y recibe <b>+15 USDT</b>.</p>
 </div>
 
 <div class="card">
 <h3>📈 Inversiones</h3>
-<p>Potenciadores con ganancias estimadas de <b>30%</b>.</p>
+<p>Potenciadores con ganancias de <b>30%</b>.</p>
 </div>
 
 <div class="card">
 <h3>👥 Referidos</h3>
-<p>Gana <b>0.10 USDT</b> por cada invitado.</p>
+<p>Gana <b>0.10 USDT</b> por invitado.</p>
 </div>
 
 </div>
 
 </section>
-
 
 <section>
 
@@ -305,12 +285,12 @@ opacity:0.7;
 
 <div class="card">
 <h3>💎 Referidos ampliados</h3>
-<p>Recibe <b>0.30 USDT</b> por invitado.</p>
+<p>Hasta <b>0.30 USDT</b> por invitado.</p>
 </div>
 
 <div class="card">
 <h3>💰 Beneficios diarios</h3>
-<p>Colaboradores generan desde <b>10 USDT diarios</b>.</p>
+<p>Desde <b>10 USDT diarios</b>.</p>
 </div>
 
 <div class="card">
@@ -322,9 +302,7 @@ opacity:0.7;
 
 </section>
 
-<div class="map">
-🌎
-</div>
+<div class="map">🌎</div>
 
 <button class="btn"
 onclick="window.location.href='https://usdtexchange1.github.io/COIN-GROW/'">
@@ -339,15 +317,71 @@ CoinGrow © Plataforma en crecimiento
 
 <script>
 
+/* STORAGE INIT */
+
+let users=localStorage.getItem("cg_users")||1382
+let refs=localStorage.getItem("cg_refs")||600
+let investors=localStorage.getItem("cg_investors")||348
+let earn=localStorage.getItem("cg_earn")||12450
+
+users=parseInt(users)
+refs=parseInt(refs)
+investors=parseInt(investors)
+earn=parseInt(earn)
+
+/* UPDATE UI */
+
+function updateUI(){
+
+document.getElementById("users").innerText=users
+document.getElementById("refs").innerText=refs
+document.getElementById("investors").innerText=investors
+document.getElementById("earn").innerText="$"+earn.toLocaleString()
+
+}
+
+/* SAVE */
+
+function save(){
+
+localStorage.setItem("cg_users",users)
+localStorage.setItem("cg_refs",refs)
+localStorage.setItem("cg_investors",investors)
+localStorage.setItem("cg_earn",earn)
+
+}
+
+updateUI()
+
+/* RANDOM GROWTH */
+
+function growStats(){
+
+users+=Math.floor(Math.random()*3)
+refs+=Math.floor(Math.random()*2)
+investors+=Math.floor(Math.random()*2)
+earn+=Math.floor(Math.random()*20)
+
+updateUI()
+save()
+
+let next=Math.random()*(3600000-5000)+5000
+
+setTimeout(growStats,next)
+
+}
+
+growStats()
+
 /* PARTICLES */
 
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
+const canvas=document.getElementById("particles")
+const ctx=canvas.getContext("2d")
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
-let particles=[];
+let particles=[]
 
 for(let i=0;i<80;i++){
 
@@ -356,110 +390,77 @@ x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*2,
 d:Math.random()*1
-});
+})
 
 }
 
 function drawParticles(){
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.clearRect(0,0,canvas.width,canvas.height)
 
-ctx.fillStyle="#00ffd5";
+ctx.fillStyle="#00ffd5"
 
 particles.forEach(p=>{
 
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-ctx.fill();
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
+ctx.fill()
 
-p.y+=p.d;
+p.y+=p.d
 
 if(p.y>canvas.height){
-p.y=0;
+p.y=0
 }
 
-});
+})
 
-requestAnimationFrame(drawParticles);
-
-}
-
-drawParticles();
-
-/* COUNTERS */
-
-document.querySelectorAll(".counter").forEach(counter=>{
-
-let update=()=>{
-
-let target=+counter.getAttribute("data-target");
-let current=+counter.innerText;
-let increment=target/100;
-
-if(current<target){
-counter.innerText=Math.ceil(current+increment);
-setTimeout(update,20);
-}else{
-counter.innerText=target;
-}
+requestAnimationFrame(drawParticles)
 
 }
 
-update();
+drawParticles()
 
-});
+/* NOTIFICATIONS */
 
-/* LIVE EARNINGS */
-
-let earn=12450;
-
-setInterval(()=>{
-
-earn+=Math.floor(Math.random()*5);
-
-document.getElementById("earn").innerText="$"+earn.toLocaleString();
-
-},3000);
-
-/* FLOATING NOTIFICATIONS */
+const names=[
+"Carlos","Ana","Luis","Daniel","Jorge","Miguel","Sofía","Laura","Pedro","Marcos",
+"Elena","Mario","Andrés","Ricardo","José","Paula","Camila","Roberto","Fernando",
+"Isabella","Mateo","Valentina","Sebastián","Diego","Andrea","Julio","Gabriel"
+]
 
 function randomName(){
-
-const names=["Carlos","Ana","Luis","Daniel","Jorge","Miguel","Sofía","Laura","Pedro","Marcos","Elena","Mario"];
-
-return names[Math.floor(Math.random()*names.length)];
-
+return names[Math.floor(Math.random()*names.length)]
 }
 
 function showNotification(){
 
-let div=document.createElement("div");
-div.className="notify";
+let div=document.createElement("div")
+div.className="notify"
 
-div.innerText="✅ "+randomName()+" se ha registrado en CoinGrow";
+div.innerText="✅ "+randomName()+" se ha registrado en CoinGrow"
 
-document.getElementById("notifyContainer").appendChild(div);
+document.getElementById("notifyContainer").appendChild(div)
 
-setTimeout(()=>{div.remove();},3000);
+setTimeout(()=>{div.remove()},3000)
 
 }
 
 function startNotifications(){
 
-let time=(Math.random()*29000)+1000;
+let time=(Math.random()*29000)+1000
 
 setTimeout(()=>{
 
-showNotification();
-startNotifications();
+showNotification()
+startNotifications()
 
-},time);
+},time)
 
 }
 
-startNotifications();
+startNotifications()
 
 </script>
 
 </body>
-</html>
+  </html>
